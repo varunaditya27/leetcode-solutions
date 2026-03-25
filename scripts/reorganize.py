@@ -1,6 +1,5 @@
 import os
 import shutil
-import re
 
 SOLUTIONS_DIR = "solutions"
 DIFFICULTY_DIRS = {"easy", "medium", "hard"}
@@ -17,10 +16,14 @@ def get_difficulty(readme_path):
     return None
 
 def reorganize():
+    # ↓ ADDED GUARD
+    if not os.path.exists(SOLUTIONS_DIR):
+        print("solutions/ directory not found — nothing to reorganize.")
+        return
+
     for item in os.listdir(SOLUTIONS_DIR):
         item_path = os.path.join(SOLUTIONS_DIR, item)
 
-        # skip the easy/medium/hard folders themselves
         if item in DIFFICULTY_DIRS or not os.path.isdir(item_path):
             continue
 

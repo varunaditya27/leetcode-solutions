@@ -3,18 +3,19 @@ name: Sync LeetCode
 on:
   workflow_dispatch:
   schedule:
-    - cron: "30 14 * * *"   # 8:00 PM IST daily
+    - cron: "30 14 * * *"
+
+permissions:
+  contents: write
 
 jobs:
   sync:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repo so the runner has access to it
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      # Step 2: Pull all accepted submissions from LeetCode into solutions/
       - name: Sync LeetCode Submissions
         uses: joshcai/leetcode-sync@v1.7
         with:
@@ -26,17 +27,21 @@ jobs:
           commit-header: "[LeetCode Sync]"
           filter-duplicate-secs: 86400
 
-      # Step 3: Set up Python for the reorganizer script
+      # ↓ THIS IS THE FIX — pull the files the sync just committed via API
+      - name: Pull Latest Changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull origin main --rebase
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      # Step 4: Run the reorganizer — moves folders into easy/medium/hard
       - name: Reorganize by Difficulty
         run: python scripts/reorganize.py
 
-      # Step 5: Commit the reorganized folder structure back to the repo
       - name: Commit Reorganized Structure
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
