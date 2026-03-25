@@ -35,7 +35,7 @@ leetcode-solutions/
 │   └── workflows/
 │       └── sync_leetcode.yml
 ├── scripts/
-│   └── reorganize.py          ← ADD THIS
+│   └── reorganize.py          
 ├── solutions/
 │   ├── easy/
 │   ├── medium/
