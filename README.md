@@ -31,16 +31,16 @@
 
 ```
 leetcode-solutions/
+├── .github/
+│   └── workflows/
+│       └── sync_leetcode.yml
+├── scripts/
+│   └── reorganize.py          ← ADD THIS
 ├── solutions/
 │   ├── easy/
-│   │   └── 0001-two-sum/
-│   │       ├── solution.cpp
-│   │       └── README.md
 │   ├── medium/
 │   └── hard/
-└── .github/
-    └── workflows/
-        └── sync_leetcode.yml
+└── README.md
 ```
 
 ---
